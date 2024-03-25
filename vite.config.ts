@@ -9,6 +9,20 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    // 端口号
+    port: 5173,
+    host: "0.0.0.0",
+    // 本地跨域代理 https://cn.vitejs.dev/config/server-options.html#server-proxy
+    proxy: {
+      '/api': {
+        target: 'https://dashscope.aliyuncs.com/',
+        changeOrigin: true,
+        secure:false,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
   plugins: [
     vue(),
     AutoImport({
