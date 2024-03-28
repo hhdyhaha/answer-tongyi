@@ -23,7 +23,14 @@
             <div class="main-content">
               我是主体内容
             </div>
-            <el-footer class="footer">Footer</el-footer>
+            <el-footer class="footer">
+              <el-input
+                v-model="textValue"
+                class="footer-input"
+                type="text"
+                placeholder="请输入问题"
+              ></el-input>
+            </el-footer>
           </el-main>
         </el-container>
       </el-container>
@@ -33,7 +40,9 @@
 
 <script setup lang="ts">
 import { tongYiApi } from '@/api'
+import { ref } from 'vue'
 
+const textValue = ref<string>('')
 const askTongYiApi = async () => {
   const params = {
     'model': 'qwen-turbo',
@@ -62,7 +71,7 @@ const askTongYiApi = async () => {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .common-layout {
   height: 100%;
 }
@@ -82,6 +91,7 @@ const askTongYiApi = async () => {
   height: calc(100% - 20px);
   border-radius: 32px;
   margin: 0 20px;
+
   .main-content {
     width: 100%;
     height: calc(100% - 60px);
@@ -122,10 +132,21 @@ const askTongYiApi = async () => {
 }
 
 .footer {
+  height: 60px;
   background: #ffffff;
   border-radius: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
+
+  .footer-input {
+    border-radius: 16px;
+  }
+
+  :deep(.el-input__inner) {
+    height: 60px;
+  }
+
 }
 </style>
