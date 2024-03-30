@@ -25,14 +25,17 @@
                 👏🏻👏🏻👏🏻🎉🎉🎉
               </el-card>
               <el-card class="main-content-history" v-else>
-                <div class="main-content-history-user" v-for="(item,index) in userHistoryList" :key="index">
-                  <span>{{ item.content }}</span>
-                  <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+                <div v-for="(item,index) in userHistoryList" :key="index">
+                  <div class="main-content-history-user">
+                    <span>{{ item.content }}</span>
+                    <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+                  </div>
+                  <div class="main-content-history-ai" v-if="aiHistoryList[index]">
+                    <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+                    <span>{{ aiHistoryList[index].content }}</span>
+                  </div>
                 </div>
-                <div class="main-content-history-ai" v-for="(item,index) in aiHistoryList" :key="index">
-                  <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-                  <span>{{ item.content }}</span>
-                </div>
+
               </el-card>
             </div>
 
@@ -96,20 +99,17 @@ const askTongYiApi = async () => {
 }
 
 // 发送消息
-const sendMessage = () => {
+const sendMessage = async () => {
   userHistoryList.value.push({
     content: textValue.value
   })
-  askTongYiApi().then(res => {
+  await askTongYiApi().then(async res => {
     const data = res.data
-    console.log(res)
-    console.log(data)
     if (res.status === 200) {
       aiHistoryList.value.push({
         content: data.output.choices[0].message.content
       })
       textValue.value = ''
-      console.log(aiHistoryList.value.length)
     }
   })
 }
