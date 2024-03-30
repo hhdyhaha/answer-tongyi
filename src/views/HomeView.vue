@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
     <el-container style="height: 100%">
-      <el-header class="header">面</el-header>
+      <el-header class="header">面(O_O)?</el-header>
       <el-container style="height: 100%">
         <!--侧边栏暂时搁置-->
         <el-aside width="200px" class="aside" v-if="false">
@@ -21,8 +21,21 @@
         <el-container>
           <el-main class="main">
             <div class="main-content">
-              我是主体内容
+              <el-card class="main-content-card-welcome" v-if="aiHistoryList.length===0 && userHistoryList.length===0">
+                👏🏻👏🏻👏🏻🎉🎉🎉
+              </el-card>
+              <el-card class="main-content-history" v-else>
+                <div class="main-content-history-user" v-for="(item,index) in userHistoryList" :key="index">
+                  <span>{{ item.content }}</span>
+                  <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+                </div>
+                <div class="main-content-history-ai" v-for="(item,index) in aiHistoryList" :key="index">
+                  <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+                  <span>{{ item.content }}</span>
+                </div>
+              </el-card>
             </div>
+
             <el-footer class="footer">
               <el-input
                 v-model="textValue"
@@ -47,6 +60,15 @@ import { ref } from 'vue'
 // Promotion 图标
 import { Promotion } from '@element-plus/icons-vue'
 
+
+// 要展示数据的数组，数组里面是数据对象
+interface historyListItem {
+  content: string
+}
+
+const userHistoryList = ref<historyListItem[]>([])
+const aiHistoryList = ref<historyListItem[]>([])
+// 输入的文本内容
 const textValue = ref<string>('')
 const askTongYiApi = async () => {
   const params = {
@@ -59,7 +81,7 @@ const askTongYiApi = async () => {
         },
         {
           'role': 'user',
-          'content': '华为怎么样'
+          'content': textValue.value
         }
       ]
     },
@@ -69,15 +91,27 @@ const askTongYiApi = async () => {
   }
 
   // 发送请求
-  const res = await tongYiApi(params).then((res) => {
-    console.log('res', res)
-    return res
-  })
+  const res = await tongYiApi(params)
+  return res
 }
 
 // 发送消息
 const sendMessage = () => {
-  console.log('发送消息', textValue.value)
+  userHistoryList.value.push({
+    content: textValue.value
+  })
+  askTongYiApi().then(res => {
+    const data = res.data
+    console.log(res)
+    console.log(data)
+    if (res.status === 200) {
+      aiHistoryList.value.push({
+        content: data.output.choices[0].message.content
+      })
+      textValue.value = ''
+      console.log(aiHistoryList.value.length)
+    }
+  })
 }
 </script>
 
@@ -108,6 +142,29 @@ const sendMessage = () => {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .main-content-card-welcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+    border-radius: 16px;
+  }
+
+  .main-content-history {
+    width: 100%;
+
+    .main-content-history-user {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .main-content-history-ai {
+      display: flex;
+      align-items: center;
+    }
   }
 }
 
@@ -154,9 +211,10 @@ const sendMessage = () => {
   .footer-input {
     border-radius: 16px;
   }
+
   .footer-button {
     position: absolute;
-    right:1%;
+    right: 1%;
   }
 
   :deep(.el-input__inner) {
