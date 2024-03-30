@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
     <el-container style="height: 100%">
-      <el-header class="header">面(O_O)?</el-header>
+      <el-header class="header">🦈🀀🐳(O_O)?</el-header>
       <el-container style="height: 100%">
         <!--侧边栏暂时搁置-->
         <el-aside width="200px" class="aside" v-if="false">
@@ -22,7 +22,7 @@
           <el-main class="main">
             <div class="main-content">
               <el-card class="main-content-card-welcome" v-if="aiHistoryList.length===0 && userHistoryList.length===0">
-                👏🏻👏🏻👏🏻🎉🎉🎉
+                👏🏻请👏输👏入🎉问🎉题🎉
               </el-card>
               <el-card class="main-content-history" v-else>
                 <div v-for="(item,index) in userHistoryList" :key="index">
