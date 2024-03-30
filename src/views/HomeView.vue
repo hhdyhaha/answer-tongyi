@@ -31,8 +31,8 @@
                 placeholder="请输入问题"
               >
               </el-input>
-              <el-button type="primary" class="footer-input-btn" :icon="Promotion"
-                         @click="sendMessage"></el-button>
+              <el-button :type="textValue?'primary':'info'" class="footer-button" :icon="Promotion"
+                         @click="sendMessage" :disabled="!textValue"></el-button>
             </el-footer>
           </el-main>
         </el-container>
@@ -77,7 +77,7 @@ const askTongYiApi = async () => {
 
 // 发送消息
 const sendMessage = () => {
-  console.log('发送消息')
+  console.log('发送消息', textValue.value)
 }
 </script>
 
@@ -154,11 +154,9 @@ const sendMessage = () => {
   .footer-input {
     border-radius: 16px;
   }
-  .footer-input-btn {
+  .footer-button {
     position: absolute;
     right:1%;
-    background-color: #5B54DE;
-    color: #ffffff;
   }
 
   :deep(.el-input__inner) {
