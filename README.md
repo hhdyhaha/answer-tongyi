@@ -1,39 +1,29 @@
 # answer-tongyi
 
-This template should help get you started developing with Vue 3 in Vite.
+## 项目介绍
 
-## Recommended IDE Setup
+一个基于Vue3+TS的AI项目，AI接口使用的是阿里的通义千问接口，因为目前还没写登录，所以需要自己去申请[通义千问apiKey](https://dashscope.console.aliyun.com/apiKey)，替换 src/utils/http/index.ts 文件的请求拦截器里面的token变量
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+![image-20240331012834041](/Users/h/Library/Application Support/typora-user-images/image-20240331012937777.png)
 
-## Type Support for `.vue` Imports in TS
+我用的模型是通义千问的qwen-turbo，自己如果有需要，可参考[对应模型的开发文档](https://dashscope.console.aliyun.com/model)![image-20240331013652524](/Users/h/Library/Application Support/typora-user-images/image-20240331013652524.png)
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## 项目设置
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+### 依赖安装
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### 项目运行
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### 打包
 
 ```sh
 npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
 ```
