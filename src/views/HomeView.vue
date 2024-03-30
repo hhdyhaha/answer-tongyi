@@ -29,7 +29,10 @@
                 class="footer-input"
                 type="text"
                 placeholder="请输入问题"
-              ></el-input>
+              >
+              </el-input>
+              <el-button type="primary" class="footer-input-btn" :icon="Promotion"
+                         @click="sendMessage"></el-button>
             </el-footer>
           </el-main>
         </el-container>
@@ -41,6 +44,8 @@
 <script setup lang="ts">
 import { tongYiApi } from '@/api'
 import { ref } from 'vue'
+// Promotion 图标
+import { Promotion } from '@element-plus/icons-vue'
 
 const textValue = ref<string>('')
 const askTongYiApi = async () => {
@@ -68,6 +73,11 @@ const askTongYiApi = async () => {
     console.log('res', res)
     return res
   })
+}
+
+// 发送消息
+const sendMessage = () => {
+  console.log('发送消息')
 }
 </script>
 
@@ -132,6 +142,7 @@ const askTongYiApi = async () => {
 }
 
 .footer {
+  position: relative;
   height: 60px;
   background: #ffffff;
   border-radius: 16px;
@@ -142,6 +153,12 @@ const askTongYiApi = async () => {
 
   .footer-input {
     border-radius: 16px;
+  }
+  .footer-input-btn {
+    position: absolute;
+    right:1%;
+    background-color: #5B54DE;
+    color: #ffffff;
   }
 
   :deep(.el-input__inner) {
